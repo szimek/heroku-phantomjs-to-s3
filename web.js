@@ -61,7 +61,7 @@ app.post('/screenshot', function(request, response) {
             }else{
               //clean up and respond
               fs.unlink(filenameFull, function(err){}); //delete local file
-              var s3Url = 'https://' + process.env.AWS_BUCKET_NAME + 's3.amazonaws.com/' + '/' + upload_params.Key;
+              var s3Url = 'https://' + process.env.AWS_BUCKET_NAME + '.s3-eu-west-1.amazonaws.com/' + '/' + upload_params.Key;
 
               if (request.body.redirect == 'true') {
                 return response.redirect(302, s3Url);
