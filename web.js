@@ -52,6 +52,7 @@ app.post('/screenshot', function(request, response) {
             ACL: "public-read",
             Bucket: process.env.AWS_BUCKET_NAME
           };
+
           //start uploading
           s3.putObject(upload_params, function(err, s3_data) {
             if(err!=null){
@@ -60,9 +61,7 @@ app.post('/screenshot', function(request, response) {
             }else{
               //clean up and respond
               fs.unlink(filenameFull, function(err){}); //delete local file
-              var s3Region = process.env.AWS_REGION? 's3-' + process.env.AWS_REGION : 's3'
-              var s3Url = 'https://' + s3Region + ".amazonaws.com/" + process.env.AWS_BUCKET_NAME +
-              '/' + upload_params.Key;
+              var s3Url = 'https://' + process.env.AWS_BUCKET_NAME + 's3.amazonaws.com/' + '/' + upload_params.Key;
 
               if (request.body.redirect == 'true') {
                 return response.redirect(302, s3Url);
